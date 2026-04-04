@@ -44,7 +44,8 @@ nvim_configs/
 │       ├── ui.lua          # Thème Catppuccin + Statusline Lualine
 │       ├── filetree.lua    # File Tree (Neo-tree)
 │       ├── startup.lua     # Écran d'accueil + Aide raccourcis
-│       └── bufferline.lua  # Onglets / Buffers (barre du haut)
+│       ├── bufferline.lua  # Onglets / Buffers (barre du haut)
+│       └── telescope.lua   # Fuzzy Finder (Ctrl+P, recherche globale)
 ├── lazy-lock.json      # Versions verrouillées des plugins (généré auto)
 └── README.md           # Ce fichier
 ```
@@ -212,6 +213,25 @@ Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub �
 | `Clic gauche` | Sélectionner l'onglet |
 | `Clic droit` | Fermer l'onglet |
 
+### Étape 5 — Fuzzy Finder (`lua/plugins/telescope.lua`)
+
+| Plugin | Rôle |
+|--------|------|
+| [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | Moteur de recherche multimode |
+| [nvim-telescope/telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim) | Extension native C pour fzf (vitesse) |
+
+#### Raccourcis de recherche (Telescope)
+
+| Raccourci | Action |
+|-----------|--------|
+| `Ctrl + P` | **Quick Open** : chercher un fichier par son nom |
+| `Space + f + g` | **Live Grep** : chercher un texte dans tout le projet |
+| `Space + f + b` | Chercher parmi les buffers ouverts |
+| `Space + f + r` | Chercher dans l'historique des fichiers récents |
+| `Space + f + h` | Chercher dans l'aide Neovim |
+
+> **Note :** Live Grep nécessite `ripgrep` (`rg`) installé sur le système.
+
 ---
 
 ## 🗺️ Roadmap
@@ -220,7 +240,7 @@ Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub �
 - [x] **Étape 2** : Thème visuel (Catppuccin) + statusline (Lualine)
 - [x] **Étape 3** : Arborescence de fichiers (Neo-tree, Ctrl+B)
 - [x] **Étape 4** : Gestion des onglets / buffers (Bufferline)
-- [ ] **Étape 5** : Fuzzy Finder (Quick Open Ctrl+P, recherche textuelle)
+- [x] **Étape 5** : Fuzzy Finder (Telescope, Ctrl+P, recherche textuelle)
 - [ ] **Étape 6** : Highlighting syntaxique (Treesitter)
 - [ ] **Étape 7** : LSP (Analyse statique, autocomplétion) — C/C++, Rust, Go, Python...
 - [ ] **Étape 8** : Débogueur (DAP — gdb, etc.)

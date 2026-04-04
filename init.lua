@@ -4,7 +4,14 @@
 
 -- 0. SILENCE WARNINGS (Spécifique aux versions Nightly/Dev comme 0.12.0)
 -- -------------------------------------------------------------------------- --
-vim.g.deprecation_warnings = false -- Silencer les warnings de plugins non à jour
+-- On neutralise l'affichage des warnings de dépréciation pour la version 0.13
+-- (Beaucoup de plugins utilisent encore tbl_flatten qui est déprécié en 0.12)
+local old_deprecate = vim.deprecate
+vim.deprecate = function(name, alt, version, ...)
+    if version == "0.13" or name:match("tbl_flatten") then return end
+    return old_deprecate(name, alt, version, ...)
+end
+
 
 -- 1. OPTIONS DE BASE (Le ressenti "IDE")
 -- -------------------------------------------------------------------------- --

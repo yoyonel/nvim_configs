@@ -47,7 +47,7 @@ return {
 
 			require("lualine").setup({
 				options = {
-					theme = "catppuccin",
+					theme = "auto", -- Détection automatique du colorscheme courant (Catppuccin)
 					-- Séparateurs en demi-cercle (style powerline)
 					component_separators = { left = "", right = "" },
 					section_separators = { left = "", right = "" },

@@ -31,12 +31,13 @@ return {
 
 			-- Boutons d'action rapide
 			dashboard.section.buttons.val = {
-				dashboard.button("n", "󰈔  Nouveau fichier",                    ":ene <BAR> startinsert <CR>"),
-				dashboard.button("e", "  Arborescence de fichiers",            ":Neotree toggle<CR>"),
-				dashboard.button("r", "  Fichiers récents",                    ":browse oldfiles<CR>"),
-				dashboard.button("l", "󰒲  Lazy — Gérer les plugins",           ":Lazy<CR>"),
-				dashboard.button("c", "  Configuration (init.lua)",            ":e $MYVIMRC<CR>"),
-				dashboard.button("q", "  Quitter",                             ":qa<CR>"),
+				dashboard.button("p", "󰈔  Ouvrir Fichier (Ctrl+P)",        ":Telescope find_files<CR>"),
+				dashboard.button("g", "  Chercher Texte (Grep)",           ":Telescope live_grep<CR>"),
+				dashboard.button("r", "  Fichiers récents",                ":Telescope oldfiles<CR>"),
+				dashboard.button("e", "  Arborescence (Ctrl+B)",           ":Neotree toggle<CR>"),
+				dashboard.button("l", "󰒲  Lazy — Gérer les plugins",       ":Lazy<CR>"),
+				dashboard.button("c", "  Configuration (init.lua)",        ":e $MYVIMRC<CR>"),
+				dashboard.button("q", "  Quitter (Space+Q)",               ":confirm qa<CR>"),
 			}
 
 			-- Cheat Sheet des raccourcis
@@ -47,20 +48,23 @@ return {
 				"  ╠══════════════════════════════════════════════════════════╣",
 				"  ║  Ctrl+S            Sauvegarder                          ║",
 				"  ║  Ctrl+C / Ctrl+V   Copier / Coller (presse-papier sys.) ║",
+				"  ║  Ctrl+P            Chercher un fichier (au nom)         ║",
 				"  ║  Ctrl+B            Toggle File Tree                     ║",
 				"  ║  Ctrl+H / Ctrl+L   Fenêtre gauche / droite              ║",
 				"  ║  Ctrl+J / Ctrl+K   Fenêtre bas / haut                   ║",
 				"  ║  Alt+← / Alt+→     Onglet préc. / suivant               ║",
 				"  ║  Shift+H / Shift+L Onglet préc. / suivant               ║",
-				"  ║  Shift+Flèches     Sélection caractère par caractère    ║",
-				"  ║  Ctrl+Flèches      Saut par mot / paragraphe            ║",
-				"  ║  Ctrl+Shift+Flèch  Sélection par mot / paragraphe      ║",
-				"  ║  Ctrl+Q            Visual Block (sélection rect.)       ║",
-				"  ║  Space + x         Fermer l'onglet actuel               ║",
-				"  ║  Space + q         Quitter Neovim                       ║",
-				"  ║  Space + e         Révéler fichier dans File Tree       ║",
+				"  ║  Space + x / q     Fermer onglet / Quitter              ║",
+				"  ║  Space + f + g     Chercher texte dans le projet (Grep) ║",
+				"  ║  Space + f + b     Chercher dans les buffers ouverts    ║",
+				"  ║  Space + f + r     Chercher dans fichiers récents       ║",
+				"  ║  Space + f + h     Chercher dans l'aide Neovim          ║",
 				"  ║  Space + Shift+R   Recharger la config à chaud         ║",
-				"  ║  Space (+ attente) Afficher tous les raccourcis Leader  ║",
+				"  ╠══════════════════════════════════════════════════════════╣",
+				"  ║  Navigation Telescope (Pendant la recherche)             ║",
+				"  ║  Ctrl+j / Ctrl+k   Descendre / Monter                   ║",
+				"  ║  Entrée            Ouvrir le fichier sélectionné        ║",
+				"  ║  Ctrl+p / Esc      Fermer la recherche                  ║",
 				"  ╚══════════════════════════════════════════════════════════╝",
 			}
 
@@ -114,6 +118,11 @@ return {
 					{ "<leader>R", desc = "Recharger la config" },
 					{ "<leader>x", desc = "Fermer l'onglet" },
 					{ "<leader>q", desc = "Quitter Neovim" },
+					{ "<leader>f", group = "Chercher (Telescope)" },
+					{ "<leader>fg", desc = "Live Grep (recherche texte)" },
+					{ "<leader>fb", desc = "Chercher dans les Buffers" },
+					{ "<leader>fr", desc = "Fichiers récents" },
+					{ "<leader>fh", desc = "Aide Neovim (tags)" },
 				},
 			})
 		end,
