@@ -92,6 +92,7 @@ return {
 						["c"]       = "copy",
 						["m"]       = "move",
 						["q"]       = "close_window",
+						["<C-b>"]   = "close_window",
 						["?"]       = "show_help",
 					},
 				},
