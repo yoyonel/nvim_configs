@@ -2,6 +2,10 @@
 --                  CONFIGURATION NEOVIM "VSCODE STYLE"                       --
 -- ========================================================================== --
 
+-- 0. SILENCE WARNINGS (Spécifique aux versions Nightly/Dev comme 0.12.0)
+-- -------------------------------------------------------------------------- --
+vim.g.deprecation_warnings = false -- Silencer les warnings de plugins non à jour
+
 -- 1. OPTIONS DE BASE (Le ressenti "IDE")
 -- -------------------------------------------------------------------------- --
 vim.g.mapleader = " " -- Définir l'espace comme touche Leader

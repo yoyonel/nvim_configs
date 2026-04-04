@@ -40,7 +40,7 @@ return {
 	-- ======================================================================
 	{
 		"nvim-lualine/lualine.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
+		dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin" },
 		config = function()
 			-- Statusline globale (une seule barre pour tous les splits)
 			vim.opt.laststatus = 3

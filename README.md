@@ -42,7 +42,8 @@ nvim_configs/
 ├── lua/
 │   └── plugins/
 │       ├── ui.lua          # Thème Catppuccin + Statusline Lualine
-│       └── filetree.lua    # File Tree (Neo-tree)
+│       ├── filetree.lua    # File Tree (Neo-tree)
+│       └── startup.lua     # Écran d'accueil + Aide raccourcis
 ├── lazy-lock.json      # Versions verrouillées des plugins (généré auto)
 └── README.md           # Ce fichier
 ```
@@ -155,6 +156,41 @@ nvim_configs/
 | `q` | Fermer le panneau |
 | `?` | Aide (liste des mappings) |
 
+
+### Étape 3.1 — Aide et Démarrage (`lua/plugins/startup.lua`)
+
+| Plugin | Rôle |
+|--------|------|
+| [goolord/alpha-nvim](https://github.com/goolord/alpha-nvim) | Dashboard au démarrage avec Cheat Sheet |
+| [folke/which-key.nvim](https://github.com/folke/which-key.nvim) | Popup d'aide dynamique pour les raccourcis |
+
+#### Utilisation
+- **Dashboard** : S'affiche au lancement de `nvim` sans fichier. Appuyer sur une touche (`n`, `e`, etc.) pour l'action correspondante.
+- **Which-Key** : Appuyer sur `Space` (Leader) et attendre 400ms pour voir apparaître la liste des commandes disponibles.
+
+---
+
+## 🛠️ Qualité & CI/CD
+
+Pour éviter de "casser" la configuration en ajoutant des plugins ou des réglages complexes, plusieurs systèmes de validation sont en place :
+
+### 1. Script de validation local
+Le script `./scripts/validate.sh` vérifie la syntaxe Lua et simule un démarrage sans erreur (`headless`).
+
+```bash
+chmod +x ./scripts/validate.sh
+./scripts/validate.sh
+```
+
+### 2. Pre-commit hooks
+Si tu as l'outil `pre-commit` installé (`pip install pre-commit` ou `brew install pre-commit`), ces outils s'exécutent automatiquement avant chaque commit :
+- **Validation** : Syntaxe et démarrage headless.
+- **StyLua** : Formate automatiquement tes fichiers `.lua` pour garder une config propre.
+
+Pour activer : `pre-commit install`.
+
+### 3. Intégration Continue (CI)
+Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub à chaque Push ou Pull Request.
 
 ---
 

@@ -1,0 +1,18 @@
+repos:
+  - repo: local
+    hooks:
+      - id: validate-nvim
+        name: Validation Neovim (Headless & Syntaxe)
+        entry: ./scripts/validate.sh
+        language: script
+        pass_filenames: false
+        always_run: true
+        description: Vérifie que Neovim peut démarrer sans erreur et que la syntaxe Lua est correcte.
+
+  - repo: https://github.com/JohnnyMorganz/StyLua
+    rev: v0.20.0
+    hooks:
+      - id: stylua
+        name: Formatage Lua (StyLua)
+        args: [--indent-type, Spaces, --indent-width, "4", --quote-style, AutoPreferDouble]
+        description: Assure la cohérence visuelle du code Lua (uniquement sur fichiers modifiés).
