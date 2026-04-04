@@ -185,21 +185,22 @@ Le repo est instrumenté pour garantir une configuration stable, propre et perfo
 
 Utilise `just` à la racine pour piloter les outils internes :
 
-| Commande         | Action                                                                         |
-| ---------------- | ------------------------------------------------------------------------------ |
-| `just validate`  | Lance `./scripts/validate.sh` (Syntaxe Lua + test de démarrage Clean).         |
-| `just lint`      | Vérifie le formatage et la qualité (Lua, MD, JSON, YAML) sans modifier.        |
-| **`just fmt`**   | **Formatage automatique** de tous les fichiers du projet (Stylua + Prettier). |
-| `just sync`      | Synchronise les plugins Neovim (Lazy) en mode headless.                        |
+| Commande        | Action                                                                        |
+| --------------- | ----------------------------------------------------------------------------- |
+| `just validate` | Lance `./scripts/validate.sh` (Syntaxe Lua + test de démarrage Clean).        |
+| `just lint`     | Vérifie le formatage et la qualité (Lua, MD, JSON, YAML) sans modifier.       |
+| **`just fmt`**  | **Formatage automatique** de tous les fichiers du projet (Stylua + Prettier). |
+| `just sync`     | Synchronise les plugins Neovim (Lazy) en mode headless.                       |
 
 > **Note sur le formatage :** `just fmt` utilise automatiquement le binaire `stylua` installé par Mason dans ta config Neovim. Pour les autres formats, il utilise `npx prettier` (nécessite Node.js).
 
 ### 2. Intégration Continue (GitHub Actions)
 
 À chaque `push` ou `pull request`, le workflow `.github/workflows/ci.yml` s'exécute sur Ubuntu :
--   Installation de Neovim, Just et Stylua.
--   Exécution de `just validate` pour garantir que la config démarre.
--   Exécution de `just lint` pour vérifier la propreté du code.
+
+- Installation de Neovim, Just et Stylua.
+- Exécution de `just validate` pour garantir que la config démarre.
+- Exécution de `just lint` pour vérifier la propreté du code.
 
 ### Étape 4 — Onglets et Buffers (`lua/plugins/bufferline.lua`)
 
@@ -284,6 +285,26 @@ Utilise `just` à la racine pour piloter les outils internes :
 | `Ctrl + j/k`    | Monter / Descendre dans la liste       |
 | `Ctrl + Espace` | Forcer l'affichage de l'autocomplétion |
 
+### Étape 8 — Débogueur (DAP) (`lua/plugins/debug.lua`)
+
+| Plugin                                                                                | Rôle                                             |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| [mfussenegger/nvim-dap](https://github.com/mfussenegger/nvim-dap)                     | Moteur de debug (Debug Adapter Protocol)         |
+| [rcarriga/nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)                       | Interface visuelle avec panneaux (Stack/Var)     |
+| [theHamsta/nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text) | Valeurs des variables affichées en bout de ligne |
+
+#### Raccourcis de Debug (Standard IDE)
+
+| Raccourci       | Action                     | Description                            |
+| --------------- | -------------------------- | -------------------------------------- |
+| `F5`            | Continuer / Start          | Démarre ou poursuit l'exécution.       |
+| `F10`           | Pas à pas (Step Over)      | Saute à la ligne suivante.             |
+| `F11`           | Entrer (Step Into)         | Entre dans la fonction.                |
+| `F12`           | Sortir (Step Out)          | Finit la fonction actuelle.            |
+| `Space + b`     | Toggle Breakpoint          | Place 🔴 ou retire un point d'arrêt.   |
+| `Space + B`     | Point d'arrêt conditionnel | Demande une condition pour s'arrêter.  |
+| `Space + d + u` | Toggle DAP UI              | Ouvre/ferme manuellement les panneaux. |
+
 ---
 
 ## 🗺️ Roadmap
@@ -295,5 +316,5 @@ Utilise `just` à la racine pour piloter les outils internes :
 - [x] **Étape 5** : Fuzzy Finder (Telescope, Ctrl+P, recherche textuelle)
 - [x] **Étape 6** : Highlighting syntaxique (Treesitter, Ctrl+Espace)
 - [x] **Étape 7** : LSP (Analyse statique, autocomplétion) — C/C++, Rust, Go, Python...
-- [ ] **Étape 8** : Débogueur (DAP — gdb, etc.)
+- [x] **Étape 8** : Débogueur (DAP — gdb, etc.)
 - [ ] **Étape 9** : Outils associés (CMake, UV/Ruff, formatters)

@@ -5,6 +5,7 @@ Ce projet utilise **Diffview.nvim** pour reproduire l'expérience du "3-Way Merg
 ## 🚦 Démarrage Rapide
 
 Dès que Git te signale un conflit lors d'un `merge` ou d'un `rebase`, lance :
+
 ```vim
 :DiffviewOpen
 ```
@@ -19,14 +20,14 @@ Contrairement à la vue inline de base, l'écran de merge Diffview se présente 
 
 ## ⌨️ Lexique des raccourcis (PyCharm Style)
 
-| Action PyCharm         | Équivalent Neovim          | Description                                  |
-| ---------------------- | -------------------------- | -------------------------------------------- |
-| **Bouton "Accept Left"** | **`<leader>gt`** (Theirs)  | Prend "Theirs" (Remote / Colonne Gauche).   |
-| **Bouton "Accept Right"**| **`<leader>go`** (Ours)    | Prend "Ours" (Local / Colonne Droite).      |
-| **Bouton "Accept Both"** | **`<leader>ga`** (All)     | Garde les **DEUX** versions fusionnées.    |
-| **Fût "Base"**         | **`<leader>gb`** (Base)    | Prend la version commune avant le conflit.  |
-| **Chevron Suivant**    | **`]c`**                   | Saute au conflit suivant.                    |
-| **Chevron Précédent**  | **`[c`**                   | Remonte au conflit précédent.                |
+| Action PyCharm            | Équivalent Neovim         | Description                                |
+| ------------------------- | ------------------------- | ------------------------------------------ |
+| **Bouton "Accept Left"**  | **`<leader>gt`** (Theirs) | Prend "Theirs" (Remote / Colonne Gauche).  |
+| **Bouton "Accept Right"** | **`<leader>go`** (Ours)   | Prend "Ours" (Local / Colonne Droite).     |
+| **Bouton "Accept Both"**  | **`<leader>ga`** (All)    | Garde les **DEUX** versions fusionnées.    |
+| **Fût "Base"**            | **`<leader>gb`** (Base)   | Prend la version commune avant le conflit. |
+| **Chevron Suivant**       | **`]c`**                  | Saute au conflit suivant.                  |
+| **Chevron Précédent**     | **`[c`**                  | Remonte au conflit précédent.              |
 
 ## 🛠️ Le Workflow complet (Le rituel)
 

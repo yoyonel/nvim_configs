@@ -33,13 +33,28 @@ return {
 						{ "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Fermer Diffview" } },
 						{ "n", "]c", actions.next_conflict, { desc = "Conflit suivant" } },
 						{ "n", "[c", actions.prev_conflict, { desc = "Conflit précédent" } },
-						
+
 						-- ACTIONS DE RÉSOLUTION (STYLE PYCHARM)
 						-- On utilise <leader>g + (l = local, r = remote, b = base, a = all)
-						{ "n", "<leader>go", actions.conflict_choose("ours"),   { desc = "Choisir NOTRE version (Ours/Local)" } },
-						{ "n", "<leader>gt", actions.conflict_choose("theirs"), { desc = "Choisir LEUR version (Theirs/Remote)" } },
-						{ "n", "<leader>gb", actions.conflict_choose("base"),   { desc = "Choisir la BASE commune" } },
-						{ "n", "<leader>ga", actions.conflict_choose("all"),    { desc = "Garder TOUT (Fusionne les deux)" } },
+						{
+							"n",
+							"<leader>go",
+							actions.conflict_choose("ours"),
+							{ desc = "Choisir NOTRE version (Ours/Local)" },
+						},
+						{
+							"n",
+							"<leader>gt",
+							actions.conflict_choose("theirs"),
+							{ desc = "Choisir LEUR version (Theirs/Remote)" },
+						},
+						{ "n", "<leader>gb", actions.conflict_choose("base"), { desc = "Choisir la BASE commune" } },
+						{
+							"n",
+							"<leader>ga",
+							actions.conflict_choose("all"),
+							{ desc = "Garder TOUT (Fusionne les deux)" },
+						},
 					},
 					file_panel = {
 						{ "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Fermer Diffview" } },
