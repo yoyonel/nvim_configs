@@ -87,14 +87,14 @@ nvim_configs/
 | `Ctrl + Shift + ↑/↓` | Normal | Commencer une sélection jusqu'au paragraphe |
 | `Ctrl + Shift + ←/→/↑/↓` | Visuel | Étendre la sélection mot par mot / paragraphe |
 | `Ctrl + Q` | Normal | Mode Visual Block (sélection rectangulaire colonne) |
-| `Space + R` | Normal | **Recharger la config à chaud** (sans relancer nvim) |
+| `Space` puis `Shift+R` | Normal | **Recharger la config à chaud** (sans relancer nvim) |
 
 > **Comportement VSCode :** Relâcher `Shift` et appuyer sur une flèche seule annule la sélection.
 
 > **Pourquoi `Ctrl+Q` pour le bloc ?**  
 > `Ctrl+V` étant réservé pour "Coller", on utilise `Ctrl+Q` comme alias pour le mode Visual Block natif de Vim.
 
-> **`Space+R` (Rechargement)** invalide le cache des modules `lua/plugins/` et re-source `init.lua`. Les plugins déjà chargés ne seront pas réinstallés — pour ça, utiliser `:Lazy sync`.
+> **Rechargement (`Space` → `Shift+R`) :** La touche Leader est `Space`. Le raccourci se saisit en **deux temps** : appuyer sur `Space`, relâcher, puis appuyer sur `R` (majuscule = `Shift+R`), le tout dans les 300ms. Uniquement disponible en mode **Normal** (`Esc` si tu es en Insert). Invalide le cache `lua/plugins/` et re-source `init.lua`. Pour réinstaller/mettre à jour les plugins, utiliser `:Lazy sync`.
 
 
 ---

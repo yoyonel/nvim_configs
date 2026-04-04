@@ -44,9 +44,10 @@ local key = vim.keymap.set
 -- Sauvegarde rapide (Ctrl+S)
 key({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Sauvegarder" })
 
--- Rechargement à chaud de la config (Space+R)
+-- Rechargement à chaud de la config (Space + Shift+R)
 -- Invalide le cache des modules lua/plugins/ puis re-source init.lua
-key("n", "<leader>R", function()
+-- Conseil : utiliser :Lazy sync pour réinstaller/mettre à jour les plugins
+local function reload_config()
 	for name, _ in pairs(package.loaded) do
 		if name:match("^plugins") then
 			package.loaded[name] = nil
@@ -54,7 +55,8 @@ key("n", "<leader>R", function()
 	end
 	dofile(vim.env.MYVIMRC)
 	vim.notify("✅ Config rechargée !", vim.log.levels.INFO)
-end, { desc = "Recharger la config Neovim" })
+end
+key("n", "<leader>R", reload_config, { desc = "Recharger la config Neovim" })
 
 
 -- Copier (Ctrl+C en mode visuel)
