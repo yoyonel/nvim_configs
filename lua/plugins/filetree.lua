@@ -28,6 +28,23 @@ return {
 			require("neo-tree").setup({
 				close_if_last_window = true, -- Fermer nvim si neo-tree est la dernière fenêtre
 				popup_border_style = "rounded",
+				
+				-- CONFIGURATION DU RENDU (Alignement à droite comme VSCode)
+				renderers = {
+					file = {
+						{ "indent" },
+						{ "icon" },
+						{ "name", use_git_status_colors = true },
+						{ "modified", zindex = 20, align = "right" },
+						{ "git_status", zindex = 20, align = "right" },
+					},
+					directory = {
+						{ "indent" },
+						{ "icon" },
+						{ "name", use_git_status_colors = true },
+						{ "git_status", zindex = 20, align = "right" },
+					},
+				},
 
 				-- Apparence générale
 				default_component_configs = {
@@ -39,31 +56,35 @@ return {
 						last_indent_marker = "└",
 						highlight = "NeoTreeIndentMarker",
 					},
-					icon = {
-						folder_closed = "",
-						folder_open = "",
-						folder_empty = "󰜌",
-						default = "",
+					name = {
+						use_git_status_colors = true, -- Colorie le nom selon l'état Git
+						highlight_opened_files = true, -- Surligne le fichier qu'on est en train d'éditer
 					},
 					modified = {
 						symbol = "●",
 						highlight = "NeoTreeModified",
 					},
-					-- Indicateurs Git dans l'arbre
+					-- Indicateurs Git TRÈS VISIBLES (comme VSCode)
 					git_status = {
 						symbols = {
-							added     = "✚",
-							modified  = "",
-							deleted   = "✖",
-							renamed   = "󰁕",
-							untracked = "",
-							ignored   = "",
-							unstaged  = "󰄱",
-							staged    = "",
-							conflict  = "",
+							-- On utilise des lettres pour le style IDE classique
+							added     = "A",
+							modified  = "M",
+							deleted   = "D",
+							renamed   = "R",
+							untracked = "U",
+							ignored   = "◌",
+							unstaged  = "U",
+							staged    = "S",
+							conflict  = "✘",
 						},
 					},
 				},
+
+				-- Options de coloration et rendu
+				enable_git_status = true,
+				enable_diagnostics = true,
+
 
 				-- Configuration de la fenêtre latérale
 				window = {
