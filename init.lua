@@ -44,6 +44,19 @@ local key = vim.keymap.set
 -- Sauvegarde rapide (Ctrl+S)
 key({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Sauvegarder" })
 
+-- Rechargement à chaud de la config (Space+R)
+-- Invalide le cache des modules lua/plugins/ puis re-source init.lua
+key("n", "<leader>R", function()
+	for name, _ in pairs(package.loaded) do
+		if name:match("^plugins") then
+			package.loaded[name] = nil
+		end
+	end
+	dofile(vim.env.MYVIMRC)
+	vim.notify("✅ Config rechargée !", vim.log.levels.INFO)
+end, { desc = "Recharger la config Neovim" })
+
+
 -- Copier (Ctrl+C en mode visuel)
 key("v", "<C-c>", '"+y', { desc = "Copier vers presse-papier" })
 
@@ -57,13 +70,41 @@ key("n", "<S-Down>", "v<Down>", { desc = "Sélection vers le bas" })
 key("n", "<S-Left>", "v<Left>", { desc = "Sélection vers la gauche" })
 key("n", "<S-Right>", "v<Right>", { desc = "Sélection vers la droite" })
 
-key("v", "<S-Up>", "<Up>", { desc = "Étendre sélection haut" })
-key("v", "<S-Down>", "<Down>", { desc = "Étendre sélection bas" })
-key("v", "<S-Left>", "<Left>", { desc = "Étendre sélection gauche" })
+key("v", "<S-Up>",    "<Up>",    { desc = "Étendre sélection haut" })
+key("v", "<S-Down>",  "<Down>",  { desc = "Étendre sélection bas" })
+key("v", "<S-Left>",  "<Left>",  { desc = "Étendre sélection gauche" })
 key("v", "<S-Right>", "<Right>", { desc = "Étendre sélection droite" })
 
+-- Flèches seules en mode visuel : annuler la sélection et déplacer le curseur
+-- (Comportement VSCode : relâcher Shift termine la sélection)
+key("v", "<Up>",    "<Esc><Up>",    { desc = "Annuler sélection et aller haut" })
+key("v", "<Down>",  "<Esc><Down>",  { desc = "Annuler sélection et aller bas" })
+key("v", "<Left>",  "<Esc><Left>",  { desc = "Annuler sélection et aller gauche" })
+key("v", "<Right>", "<Esc><Right>", { desc = "Annuler sélection et aller droite" })
+
 -- Visual Block (Comme Ctrl+V est pris pour "Coller", on utilise Ctrl+Q)
-key("n", "<C-q>", "<C-v>", { desc = "Mode Visual Block" })
+key("n", "<C-q>", "<C-v>", { desc = "Mode Visual Block (sélection rectangulaire)" })
+
+-- Ctrl+Flèches : Saut par mot (comme dans VSCode / tout éditeur moderne)
+key({ "n", "v" }, "<C-Left>",  "b",  { desc = "Mot précédent" })
+key({ "n", "v" }, "<C-Right>", "w",  { desc = "Mot suivant" })
+key({ "n", "v" }, "<C-Up>",   "{",  { desc = "Paragraphe précédent" })
+key({ "n", "v" }, "<C-Down>", "}",  { desc = "Paragraphe suivant" })
+
+-- Ctrl+Shift+Flèches : Sélection mot par mot (comme dans VSCode)
+-- Gauche/Droite : sélectionne le mot précédent/suivant
+key("n", "<C-S-Left>",  "vb", { desc = "Sélectionner vers mot précédent" })
+key("n", "<C-S-Right>", "vw", { desc = "Sélectionner vers mot suivant" })
+-- Haut/Bas : sélectionne jusqu'au paragraphe précédent/suivant
+key("n", "<C-S-Up>",   "v{", { desc = "Sélectionner vers paragraphe précédent" })
+key("n", "<C-S-Down>", "v}", { desc = "Sélectionner vers paragraphe suivant" })
+
+-- En mode visuel (sélection déjà active) : étendre mot à mot
+key("v", "<C-S-Left>",  "b",  { desc = "Étendre sélection mot précédent" })
+key("v", "<C-S-Right>", "w",  { desc = "Étendre sélection mot suivant" })
+key("v", "<C-S-Up>",   "{",  { desc = "Étendre sélection paragraphe précédent" })
+key("v", "<C-S-Down>", "}",  { desc = "Étendre sélection paragraphe suivant" })
+
 
 -- 3. BOOTSTRAP DE LAZY.NVIM
 -- -------------------------------------------------------------------------- --
@@ -83,9 +124,10 @@ vim.opt.rtp:prepend(lazypath)
 -- Configuration de Lazy
 require("lazy").setup({
 	spec = {
-		-- Les plugins seront ajoutés ici étape par étape
+		-- Import de tous les fichiers dans lua/plugins/
+		{ import = "plugins" },
 	},
-	install = { colorscheme = { "habamax" } },
+	install = { colorscheme = { "catppuccin", "habamax" } },
 	checker = { enabled = true },
 })
 
