@@ -72,9 +72,21 @@ return {
 			key("n", "<C-A-Left>", "<cmd>BufferLineMovePrev<cr>", { desc = "Déplacer onglet vers gauche" })
 			key("n", "<C-A-Right>", "<cmd>BufferLineMoveNext<cr>", { desc = "Déplacer onglet vers droite" })
 
-			-- Fermer l'onglet courant proprement (Space + x)
-			-- Bdelete réduit les risques de fermer nvim accidentellement
-			key("n", "<leader>x", "<cmd>Bdelete<cr>", { desc = "Fermer le buffer (onglet)" })
+			-- Fermer l'onglet ou la fenêtre intelligemment (Space + x)
+			local function smart_close()
+				local bufnr = vim.api.nvim_get_current_buf()
+				local ft = vim.bo[bufnr].filetype
+				local bt = vim.bo[bufnr].buftype
+
+				-- Si c'est une fenêtre spéciale (CMake, Quickfix, Aide, etc.)
+				if ft == "cmake-tools-helper" or bt == "quickfix" or bt == "help" or ft == "toggleterm" then
+					vim.cmd("close")
+				else
+					-- Sinon on ferme le buffer normalement (onglet)
+					vim.cmd("Bdelete")
+				end
+			end
+			key("n", "<leader>x", smart_close, { desc = "Fermer (intelligent)" })
 			key("n", "<leader>X", "<cmd>Bdelete!<cr>", { desc = "Fermer le buffer sans sauvegarder" })
 
 			-- Accès direct (Alt + 1-9) — Comme dans VSCode / Chrome

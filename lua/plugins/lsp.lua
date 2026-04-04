@@ -33,6 +33,7 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			"hrsh7th/cmp-nvim-lsp",
 			-- UI & Rename Premium
 			{ 
@@ -59,10 +60,11 @@ return {
 
 			local mason = safe_require("mason")
 			local mason_lspconfig = safe_require("mason-lspconfig")
+			local mason_tool_installer = safe_require("mason-tool-installer")
 			local lspconfig = safe_require("lspconfig")
 			local cmp_lsp = safe_require("cmp_nvim_lsp")
 
-			if not (mason and mason_lspconfig and lspconfig and cmp_lsp) then return end
+			if not (mason and mason_lspconfig and mason_tool_installer and lspconfig and cmp_lsp) then return end
 
 			-- Chemin Mason correct
 			local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
@@ -70,7 +72,15 @@ return {
 
 			mason.setup({ ui = { border = "rounded" } })
 			mason_lspconfig.setup({
-				ensure_installed = { "lua_ls", "pyright", "clangd", "rust_analyzer" },
+				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "rust_analyzer" },
+			})
+
+			mason_tool_installer.setup({
+				ensure_installed = {
+					"stylua",       -- Formatteur Lua
+					"clang-format", -- Formatteur C/C++
+					"ruff",         -- Linter/Formatter Python
+				},
 			})
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -109,10 +119,12 @@ return {
 				end,
 			})
 
-			-- Configuration des serveurs
-			local servers = { "pyright", "rust_analyzer" }
+			-- Configuration des serveurs standards
+			local servers = { "pyright", "ruff", "rust_analyzer" }
 			for _, server in ipairs(servers) do
-				lspconfig[server].setup({ capabilities = capabilities })
+				lspconfig[server].setup({ 
+					capabilities = capabilities,
+				})
 			end
 
 			-- Configuration optimisée pour clangd

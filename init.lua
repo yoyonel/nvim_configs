@@ -2,16 +2,14 @@
 --                  CONFIGURATION NEOVIM "VSCODE STYLE"                       --
 -- ========================================================================== --
 
--- On neutralise TOUS les warnings de dépréciation au démarrage (0.12.0 est trop bavard)
+-- On neutralise les warnings de dépréciation
 vim.deprecate = function() end
-vim.notify = function(msg)
-	if msg:match("deprecated") or msg:match("lspconfig") then return end
-	print(msg)
-end
 
--- PATCH : Compatibilité Telescope pour Neovim 0.12+ (ft_to_lang manquant)
-if not vim.treesitter.ft_to_lang then
-  vim.treesitter.ft_to_lang = function(ft) return ft end
+-- Silence sur les notifications dépréciées (LSP, etc)
+vim.notify = function(msg, level, opts)
+	if msg:match("deprecated") or msg:match("lspconfig") then return end
+	-- Utilisation de la notification standard si pas de match
+	return vim.api.nvim_echo({{msg, "None"}}, true, {})
 end
 
 -- Délais pour les séquences de touches (Fix flèches 'A', 'B'...)
