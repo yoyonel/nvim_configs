@@ -128,6 +128,7 @@ return {
 					{ "<leader>f", group = "Chercher (Telescope)" },
 					{ "<leader>r", group = "Rename (LSP)" },
 					{ "<leader>c", group = "Code Actions (LSP)" },
+					{ "<leader>j", group = "Just / Tâches" },
 					{ "<leader>fg", desc = "Live Grep (recherche texte)" },
 					{ "<leader>fb", desc = "Chercher dans les Buffers" },
 					{ "<leader>fr", desc = "Fichiers récents" },

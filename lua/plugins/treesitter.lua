@@ -9,10 +9,7 @@ return {
 		build = ":TSUpdate", -- Mettre à jour les parsers automatiquement
 		config = function()
 			local ok, configs = pcall(require, "nvim-treesitter.configs")
-			if not ok then
-				print("Treesitter non chargé. Exécutez :Lazy sync pour réparer.")
-				return
-			end
+			if not ok then return end
 
 			configs.setup({
 				-- Liste des langages à installer automatiquement (très complet)
@@ -21,7 +18,7 @@ return {
 					"python", "bash", "markdown", "markdown_inline",
 					"c", "cpp", "rust", "go",             -- Systems
 					"javascript", "typescript", "tsx",    -- Web
-					"html", "css", "json", "yaml"          -- Config & Web
+					"html", "css", "json", "yaml", "just"          -- Config & Web
 				},
 
 				-- Installation automatique des parsers manquants à l'ouverture
