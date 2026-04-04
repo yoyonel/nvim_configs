@@ -54,6 +54,8 @@ return {
 				"  ║  Ctrl+J / Ctrl+K   Fenêtre bas / haut                   ║",
 				"  ║  Alt+← / Alt+→     Onglet préc. / suivant               ║",
 				"  ║  Shift+H / Shift+L Onglet préc. / suivant               ║",
+				"  ║  Ctrl+Q            Visual Block (sélection rect.)       ║",
+				"  ║  Ctrl+Espace       Smart Selection (extension bloc)     ║",
 				"  ║  Space + x / q     Fermer onglet / Quitter              ║",
 				"  ║  Space + f + g     Chercher texte dans le projet (Grep) ║",
 				"  ║  Space + f + b     Chercher dans les buffers ouverts    ║",

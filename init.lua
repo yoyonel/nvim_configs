@@ -154,7 +154,13 @@ require("lazy").setup({
 		{ import = "plugins" },
 	},
 	install = { colorscheme = { "catppuccin", "habamax" } },
-	checker = { enabled = true },
+	checker = {
+		enabled = true,
+		notify = false, -- Pas de popup au démarrage pour les mises à jour
+	},
+	change_detection = {
+		notify = false, -- Pas de popup si on modifie le code de la config
+	},
 })
 
 -- Fin du fichier init.lua

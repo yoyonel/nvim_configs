@@ -45,7 +45,8 @@ nvim_configs/
 │       ├── filetree.lua    # File Tree (Neo-tree)
 │       ├── startup.lua     # Écran d'accueil + Aide raccourcis
 │       ├── bufferline.lua  # Onglets / Buffers (barre du haut)
-│       └── telescope.lua   # Fuzzy Finder (Ctrl+P, recherche globale)
+│       ├── telescope.lua   # Fuzzy Finder (Ctrl+P, recherche globale)
+│       └── treesitter.lua  # Coloration syntaxique + sélection intelligente
 ├── lazy-lock.json      # Versions verrouillées des plugins (généré auto)
 └── README.md           # Ce fichier
 ```
@@ -232,6 +233,22 @@ Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub �
 
 > **Note :** Live Grep nécessite `ripgrep` (`rg`) installé sur le système.
 
+### Étape 6 — Analyse Syntaxique (`lua/plugins/treesitter.lua`)
+
+| Plugin | Rôle |
+|--------|------|
+| [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Coloration syntaxique AST + Indentation |
+
+#### Raccourcis de sélection (Treesitter)
+
+| Raccourci | Action |
+|-----------|--------|
+| `Ctrl + Espace` | **Smart Selection** : étendre la sélection au bloc logique supérieur |
+| `Retour (Backspace)` | Réduire la sélection intelligente |
+
+> **Note :** Treesitter nécessite un compilateur C (`gcc`, `clang`) et `make` pour installer les parsers.  
+> Commande utile : `:TSUpdate` pour mettre à jour manuellement.
+
 ---
 
 ## 🗺️ Roadmap
@@ -241,7 +258,7 @@ Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub �
 - [x] **Étape 3** : Arborescence de fichiers (Neo-tree, Ctrl+B)
 - [x] **Étape 4** : Gestion des onglets / buffers (Bufferline)
 - [x] **Étape 5** : Fuzzy Finder (Telescope, Ctrl+P, recherche textuelle)
-- [ ] **Étape 6** : Highlighting syntaxique (Treesitter)
+- [x] **Étape 6** : Highlighting syntaxique (Treesitter, Ctrl+Espace)
 - [ ] **Étape 7** : LSP (Analyse statique, autocomplétion) — C/C++, Rust, Go, Python...
 - [ ] **Étape 8** : Débogueur (DAP — gdb, etc.)
 - [ ] **Étape 9** : Outils associés (CMake, UV/Ruff, formatters)
