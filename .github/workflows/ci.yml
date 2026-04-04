@@ -3,11 +3,16 @@ on: [push, pull_request]
 
 jobs:
   validate:
-    name: Validation de la config Neovim
+    name: Qualité & Validation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install Just & Stylua
+        uses: taiki-e/install-action@v2
+        with:
+          tool: just,stylua
 
       - name: Setup Neovim
         uses: rhysd/action-setup-vim@v1
@@ -15,7 +20,8 @@ jobs:
           neovim: true
           version: stable
 
-      - name: Vérification du démarrage (Headless)
-        run: |
-          chmod +x ./scripts/validate.sh
-          ./scripts/validate.sh
+      - name: Validation (Scripts/Validate)
+        run: just validate
+
+      - name: Linting (Lua, Just, Markdown, JSON, YAML)
+        run: just lint

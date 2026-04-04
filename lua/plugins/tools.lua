@@ -35,13 +35,13 @@ return {
 			-- Raccourcis clavier CMake avec FOCUS AUTOMATIQUE
 			local key = vim.keymap.set
 			key("n", "<leader>cg", "<cmd>CMakeGenerate<cr>", { desc = "CMake Generate" })
-			
+
 			-- Build + Focus
 			key("n", "<leader>cb", "<cmd>CMakeBuild<cr><C-w>j", { desc = "CMake Build & Focus" })
-			
+
 			-- Run + Focus
-			key("n", "<leader>cr", "<cmd>CMakeRun<cr><C-w>j",   { desc = "CMake Run & Focus" })
-			
+			key("n", "<leader>cr", "<cmd>CMakeRun<cr><C-w>j", { desc = "CMake Run & Focus" })
+
 			key("n", "<leader>ct", "<cmd>CMakeSelectTarget<cr>", { desc = "CMake Select Target" })
 			-- Fermer tout
 			key("n", "<leader>cc", "<cmd>CMakeClose<cr><cmd>cclose<cr>", { desc = "Fermer Console & Erreurs" })

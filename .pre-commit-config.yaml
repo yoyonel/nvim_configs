@@ -14,5 +14,13 @@ repos:
     hooks:
       - id: stylua
         name: Formatage Lua (StyLua)
-        args: [--indent-type, Spaces, --indent-width, "4", --quote-style, AutoPreferDouble]
+        args:
+          [
+            --indent-type,
+            Spaces,
+            --indent-width,
+            "4",
+            --quote-style,
+            AutoPreferDouble,
+          ]
         description: Assure la cohérence visuelle du code Lua (uniquement sur fichiers modifiés).

@@ -31,14 +31,18 @@ return {
 
 			-- Boutons d'action rapide
 			dashboard.section.buttons.val = {
-				dashboard.button("p", "󰈔  Ouvrir Fichier (Ctrl+P)",        ":Telescope find_files<CR>"),
-				dashboard.button("g", "  Chercher Texte (Grep)",           ":Telescope live_grep<CR>"),
-				dashboard.button("r", "  Fichiers récents",                ":Telescope oldfiles<CR>"),
+				dashboard.button("p", "󰈔  Ouvrir Fichier (Ctrl+P)", ":Telescope find_files<CR>"),
+				dashboard.button("g", "  Chercher Texte (Grep)", ":Telescope live_grep<CR>"),
+				dashboard.button("r", "  Fichiers récents", ":Telescope oldfiles<CR>"),
 				dashboard.button("e", "  Arborescence & Statut Git (Ctrl+B)", ":Neotree toggle<CR>"),
-				dashboard.button("l", "󰒲  Lazy — Gérer les plugins",       ":Lazy<CR>"),
-				dashboard.button("u", "󰚰  MAJ & Réparer Système (Auto)",  ":Lazy sync | TSUpdate | MasonUpdate<CR>"),
-				dashboard.button("c", "  Configuration (init.lua)",        ":e $MYVIMRC<CR>"),
-				dashboard.button("q", "  Quitter (Space+Q)",               ":confirm qa<CR>"),
+				dashboard.button("l", "󰒲  Lazy — Gérer les plugins", ":Lazy<CR>"),
+				dashboard.button(
+					"u",
+					"󰚰  MAJ & Réparer Système (Auto)",
+					":Lazy sync | TSUpdate | MasonUpdate<CR>"
+				),
+				dashboard.button("c", "  Configuration (init.lua)", ":e $MYVIMRC<CR>"),
+				dashboard.button("q", "  Quitter (Space+Q)", ":confirm qa<CR>"),
 			}
 
 			-- Cheat Sheet des raccourcis
@@ -86,7 +90,9 @@ return {
 			-- Footer : version Neovim
 			dashboard.section.footer.val = string.format(
 				"⚡ Neovim %d.%d.%d  |  lazy.nvim",
-				vim.version().major, vim.version().minor, vim.version().patch
+				vim.version().major,
+				vim.version().minor,
+				vim.version().patch
 			)
 			dashboard.section.footer.opts.hl = "AlphaFooter"
 

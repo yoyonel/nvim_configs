@@ -62,7 +62,11 @@ return {
 						{ "diagnostics", sources = { "nvim_lsp" } },
 					},
 					lualine_c = {
-						{ "filename", path = 1, symbols = { modified = " ●", readonly = " ", unnamed = "[Sans nom]" } },
+						{
+							"filename",
+							path = 1,
+							symbols = { modified = " ●", readonly = " ", unnamed = "[Sans nom]" },
+						},
 					},
 					-- Droite
 					lualine_x = { "overseer", "encoding", "fileformat", "filetype" },

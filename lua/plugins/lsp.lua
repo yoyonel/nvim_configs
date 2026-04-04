@@ -36,15 +36,15 @@ return {
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			"hrsh7th/cmp-nvim-lsp",
 			-- UI & Rename Premium
-			{ 
-				"smjonas/inc-rename.nvim", 
+			{
+				"smjonas/inc-rename.nvim",
 				config = function()
 					require("inc_rename").setup({
 						post_hook = function()
 							vim.cmd("silent! wa") -- Sauvegarde TOUT après le renommage pour forcer le rafraîchissement LSP
-						end
+						end,
 					})
-				end 
+				end,
 			},
 			{ "stevearc/dressing.nvim", opts = {} },
 		},
@@ -64,7 +64,9 @@ return {
 			local lspconfig = safe_require("lspconfig")
 			local cmp_lsp = safe_require("cmp_nvim_lsp")
 
-			if not (mason and mason_lspconfig and mason_tool_installer and lspconfig and cmp_lsp) then return end
+			if not (mason and mason_lspconfig and mason_tool_installer and lspconfig and cmp_lsp) then
+				return
+			end
 
 			-- Chemin Mason correct
 			local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
@@ -77,9 +79,9 @@ return {
 
 			mason_tool_installer.setup({
 				ensure_installed = {
-					"stylua",       -- Formatteur Lua
+					"stylua", -- Formatteur Lua
 					"clang-format", -- Formatteur C/C++
-					"ruff",         -- Linter/Formatter Python
+					"ruff", -- Linter/Formatter Python
 				},
 			})
 
@@ -98,8 +100,13 @@ return {
 					-- ⌨️ RACCOURCIS LSP (Directs et robustes)
 					key("n", "gd", vim.lsp.buf.definition, { desc = "Go to Definition", buffer = bufnr })
 					key("n", "gr", "<cmd>Telescope lsp_references<cr>", { desc = "Go to References", buffer = bufnr })
-					key("n", "gi", "<cmd>Telescope lsp_implementations<cr>", { desc = "Go to Implementation", buffer = bufnr })
-					key("n", "K",  vim.lsp.buf.hover, { desc = "Show Documentation", buffer = bufnr })
+					key(
+						"n",
+						"gi",
+						"<cmd>Telescope lsp_implementations<cr>",
+						{ desc = "Go to Implementation", buffer = bufnr }
+					)
+					key("n", "K", vim.lsp.buf.hover, { desc = "Show Documentation", buffer = bufnr })
 
 					-- RENAME (Sécurisé)
 					key("n", "<leader>rn", function()
@@ -113,8 +120,8 @@ return {
 					end, { expr = true, desc = "Rename variable", buffer = bufnr })
 
 					key("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action", buffer = bufnr })
-					key("n", "[d",  vim.diagnostic.goto_prev, { desc = "Erreur précédente", buffer = bufnr })
-					key("n", "]d",  vim.diagnostic.goto_next, { desc = "Erreur suivante", buffer = bufnr })
+					key("n", "[d", vim.diagnostic.goto_prev, { desc = "Erreur précédente", buffer = bufnr })
+					key("n", "]d", vim.diagnostic.goto_next, { desc = "Erreur suivante", buffer = bufnr })
 					key("n", "<leader>d", vim.diagnostic.open_float, { desc = "Afficher l'erreur", buffer = bufnr })
 				end,
 			})
@@ -122,7 +129,7 @@ return {
 			-- Configuration des serveurs standards
 			local servers = { "pyright", "ruff", "rust_analyzer" }
 			for _, server in ipairs(servers) do
-				lspconfig[server].setup({ 
+				lspconfig[server].setup({
 					capabilities = capabilities,
 				})
 			end
@@ -136,7 +143,7 @@ return {
 					"--clang-tidy",
 					"--header-insertion=never",
 					"--completion-style=detailed",
-					"--function-arg-placeholders",  -- Version simple (flag)
+					"--function-arg-placeholders", -- Version simple (flag)
 					"--fallback-style=llvm",
 					"--all-scopes-completion",
 					"--compile-commands-dir=build",
@@ -145,7 +152,12 @@ return {
 					-- Drivers
 					"--query-driver=/usr/bin/gcc,/usr/bin/g++,/usr/bin/clang,/usr/bin/clang++",
 				},
-				root_dir = lspconfig.util.root_pattern(".git", "compile_commands.json", "build/compile_commands.json", "CMakeLists.txt"),
+				root_dir = lspconfig.util.root_pattern(
+					".git",
+					"compile_commands.json",
+					"build/compile_commands.json",
+					"CMakeLists.txt"
+				),
 			})
 
 			lspconfig.lua_ls.setup({
@@ -175,9 +187,9 @@ return {
 		event = "InsertEnter",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp", -- Source LSP
-			"hrsh7th/cmp-buffer",   -- Source Buffer (mots dans le fichier)
-			"hrsh7th/cmp-path",     -- Source Path (chemins de fichiers)
-			"L3MON4D3/LuaSnip",     -- Snippets engine
+			"hrsh7th/cmp-buffer", -- Source Buffer (mots dans le fichier)
+			"hrsh7th/cmp-path", -- Source Path (chemins de fichiers)
+			"L3MON4D3/LuaSnip", -- Snippets engine
 			"saadparwaiz1/cmp_luasnip", -- Pont Snippets <> Cmp
 		},
 		config = function()
@@ -193,8 +205,8 @@ return {
 				mapping = cmp.mapping.preset.insert({
 					["<C-k>"] = cmp.mapping.select_prev_item(), -- Monter dans la liste
 					["<C-j>"] = cmp.mapping.select_next_item(), -- Descendre
-					["<C-Space>"] = cmp.mapping.complete(),     -- Forcer l'affichage
-					["<Esc>"] = cmp.mapping.abort(),            -- Fermer
+					["<C-Space>"] = cmp.mapping.complete(), -- Forcer l'affichage
+					["<Esc>"] = cmp.mapping.abort(), -- Fermer
 					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Entrée pour valider
 					-- Tabulation (standard VSCode)
 					["<Tab>"] = cmp.mapping(function(fallback)
@@ -209,10 +221,10 @@ return {
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" }, -- Priorité 1 : LSP
-					{ name = "luasnip" },  -- Priorité 2 : Snippets
+					{ name = "luasnip" }, -- Priorité 2 : Snippets
 				}, {
-					{ name = "buffer" },   -- Priorité 3 : Mots du fichier
-					{ name = "path" },     -- Priorité 4 : Chemins
+					{ name = "buffer" }, -- Priorité 3 : Mots du fichier
+					{ name = "path" }, -- Priorité 4 : Chemins
 				}),
 				formatting = {
 					format = function(_, vim_item)

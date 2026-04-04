@@ -58,7 +58,7 @@ return {
 						},
 					},
 					preview = {
-						timeout = 1000,      -- On laisse 1sec à Telescope (au lieu de 250ms)
+						timeout = 1000, -- On laisse 1sec à Telescope (au lieu de 250ms)
 						filesize_limit = 1, -- Mo max pour un fichier en preview
 					},
 				},
@@ -73,7 +73,7 @@ return {
 						initial_mode = "normal",
 						mappings = {
 							i = { ["<c-d>"] = actions.delete_buffer },
-							n = { ["d"]     = actions.delete_buffer },
+							n = { ["d"] = actions.delete_buffer },
 						},
 					},
 				},

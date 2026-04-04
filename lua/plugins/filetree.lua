@@ -10,9 +10,9 @@ return {
 		branch = "v3.x",
 		cmd = "Neotree",
 		dependencies = {
-			"nvim-lua/plenary.nvim",          -- Utilitaires Lua (requis)
-			"nvim-tree/nvim-web-devicons",    -- Icônes (requis, déjà installé par Lualine)
-			"MunifTanjim/nui.nvim",           -- Composants UI (requis)
+			"nvim-lua/plenary.nvim", -- Utilitaires Lua (requis)
+			"nvim-tree/nvim-web-devicons", -- Icônes (requis, déjà installé par Lualine)
+			"MunifTanjim/nui.nvim", -- Composants UI (requis)
 		},
 		keys = {
 			-- Ctrl+B : toggle le panneau (comme VSCode)
@@ -28,7 +28,7 @@ return {
 			require("neo-tree").setup({
 				close_if_last_window = true, -- Fermer nvim si neo-tree est la dernière fenêtre
 				popup_border_style = "rounded",
-				
+
 				-- CONFIGURATION DU RENDU (Alignement à droite comme VSCode)
 				renderers = {
 					file = {
@@ -68,15 +68,15 @@ return {
 					git_status = {
 						symbols = {
 							-- On utilise des lettres pour le style IDE classique
-							added     = "A",
-							modified  = "M",
-							deleted   = "D",
-							renamed   = "R",
+							added = "A",
+							modified = "M",
+							deleted = "D",
+							renamed = "R",
 							untracked = "U",
-							ignored   = "◌",
-							unstaged  = "U",
-							staged    = "S",
-							conflict  = "✘",
+							ignored = "◌",
+							unstaged = "U",
+							staged = "S",
+							conflict = "✘",
 						},
 					},
 				},
@@ -84,7 +84,6 @@ return {
 				-- Options de coloration et rendu
 				enable_git_status = true,
 				enable_diagnostics = true,
-
 
 				-- Configuration de la fenêtre latérale
 				window = {
@@ -94,43 +93,43 @@ return {
 					mappings = {
 						-- Navigation intuitive (+ touches classiques Vim)
 						["<space>"] = "toggle_node",
-						["<cr>"]    = "open",
-						["o"]       = "open",
-						["l"]       = "open",           -- Vim-style : ouvrir
-						["h"]       = "close_node",     -- Vim-style : fermer
-						["v"]       = "open_vsplit",
-						["s"]       = "open_split",
-						["t"]       = "open_tabnew",
-						["C"]       = "close_all_nodes",
-						["z"]       = "close_all_nodes",
-						["R"]       = "refresh",
-						["a"]       = "add",            -- Nouveau fichier
-						["A"]       = "add_directory",  -- Nouveau dossier
-						["d"]       = "delete",
-						["r"]       = "rename",
-						["y"]       = "copy_to_clipboard",
-						["x"]       = "cut_to_clipboard",
-						["p"]       = "paste_from_clipboard",
-						["c"]       = "copy",
-						["m"]       = "move",
-						["q"]       = "close_window",
-						["<C-b>"]   = "close_window",
-						["?"]       = "show_help",
+						["<cr>"] = "open",
+						["o"] = "open",
+						["l"] = "open", -- Vim-style : ouvrir
+						["h"] = "close_node", -- Vim-style : fermer
+						["v"] = "open_vsplit",
+						["s"] = "open_split",
+						["t"] = "open_tabnew",
+						["C"] = "close_all_nodes",
+						["z"] = "close_all_nodes",
+						["R"] = "refresh",
+						["a"] = "add", -- Nouveau fichier
+						["A"] = "add_directory", -- Nouveau dossier
+						["d"] = "delete",
+						["r"] = "rename",
+						["y"] = "copy_to_clipboard",
+						["x"] = "cut_to_clipboard",
+						["p"] = "paste_from_clipboard",
+						["c"] = "copy",
+						["m"] = "move",
+						["q"] = "close_window",
+						["<C-b>"] = "close_window",
+						["?"] = "show_help",
 					},
 				},
 
 				-- Source : système de fichiers
 				filesystem = {
 					filtered_items = {
-						visible = false,        -- Cacher les fichiers ignorés par défaut
-						hide_dotfiles = false,  -- Afficher les dotfiles (ex: .gitignore)
+						visible = false, -- Cacher les fichiers ignorés par défaut
+						hide_dotfiles = false, -- Afficher les dotfiles (ex: .gitignore)
 						hide_gitignored = true, -- Masquer ce qui est dans .gitignore
 						hide_hidden = true,
 					},
 					follow_current_file = {
-						enabled = true,  -- Suivre le fichier ouvert dans l'éditeur
+						enabled = true, -- Suivre le fichier ouvert dans l'éditeur
 					},
-					group_empty_dirs = true,    -- Grouper les dossiers vides (ex: a/b/c/)
+					group_empty_dirs = true, -- Grouper les dossiers vides (ex: a/b/c/)
 					hijack_netrw_behavior = "open_current", -- Remplacer netrw
 					use_libuv_file_watcher = true, -- Rafraîchissement automatique
 				},
