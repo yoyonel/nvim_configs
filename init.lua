@@ -2,16 +2,21 @@
 --                  CONFIGURATION NEOVIM "VSCODE STYLE"                       --
 -- ========================================================================== --
 
--- 0. SILENCE WARNINGS (Spécifique aux versions Nightly/Dev comme 0.12.0)
--- -------------------------------------------------------------------------- --
--- On neutralise l'affichage des warnings de dépréciation pour la version 0.13
--- (Beaucoup de plugins utilisent encore tbl_flatten qui est déprécié en 0.12)
-local old_deprecate = vim.deprecate
-vim.deprecate = function(name, alt, version, ...)
-    if version == "0.13" or name:match("tbl_flatten") then return end
-    return old_deprecate(name, alt, version, ...)
+-- On neutralise TOUS les warnings de dépréciation au démarrage (0.12.0 est trop bavard)
+vim.deprecate = function() end
+vim.notify = function(msg)
+	if msg:match("deprecated") or msg:match("lspconfig") then return end
+	print(msg)
 end
 
+-- PATCH : Compatibilité Telescope pour Neovim 0.12+ (ft_to_lang manquant)
+if not vim.treesitter.ft_to_lang then
+  vim.treesitter.ft_to_lang = function(ft) return ft end
+end
+
+-- Délais pour les séquences de touches (Fix flèches 'A', 'B'...)
+vim.opt.timeoutlen = 300
+vim.opt.ttimeoutlen = 50
 
 -- 1. OPTIONS DE BASE (Le ressenti "IDE")
 -- -------------------------------------------------------------------------- --
@@ -35,6 +40,8 @@ vim.opt.smartcase = true
 -- Temps de réponse (pour les raccourcis complexes)
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
+vim.opt.hidden = true   -- Permet de naviguer entre fichiers sans sauvegarder
+vim.opt.scrolloff = 8   -- Garde le curseur au centre de l'écran (vertical)
 
 -- Indentation (Standard 4 espaces, extensible selon le langage)
 vim.opt.tabstop = 4

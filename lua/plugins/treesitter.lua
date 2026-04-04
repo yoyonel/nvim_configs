@@ -8,7 +8,13 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate", -- Mettre à jour les parsers automatiquement
 		config = function()
-			require("nvim-treesitter.configs").setup({
+			local ok, configs = pcall(require, "nvim-treesitter.configs")
+			if not ok then
+				print("Treesitter non chargé. Exécutez :Lazy sync pour réparer.")
+				return
+			end
+
+			configs.setup({
 				-- Liste des langages à installer automatiquement (très complet)
 				ensure_installed = {
 					"lua", "vim", "vimdoc", "query",       -- Neovim interne
@@ -20,6 +26,7 @@ return {
 
 				-- Installation automatique des parsers manquants à l'ouverture
 				auto_install = true,
+				sync_install = true, -- Force le téléchargement synchrone (évite les bugs master/main)
 
 				-- Coloration syntaxique basée sur l'arbre syntaxique (AST)
 				highlight = {

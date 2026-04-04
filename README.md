@@ -46,7 +46,8 @@ nvim_configs/
 │       ├── startup.lua     # Écran d'accueil + Aide raccourcis
 │       ├── bufferline.lua  # Onglets / Buffers (barre du haut)
 │       ├── telescope.lua   # Fuzzy Finder (Ctrl+P, recherche globale)
-│       └── treesitter.lua  # Coloration syntaxique + sélection intelligente
+│       ├── treesitter.lua  # Coloration syntaxique + sélection intelligente
+│       └── lsp.lua         # Intelligence de code (Definitions, Autocomplete)
 ├── lazy-lock.json      # Versions verrouillées des plugins (généré auto)
 └── README.md           # Ce fichier
 ```
@@ -249,6 +250,35 @@ Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub �
 > **Note :** Treesitter nécessite un compilateur C (`gcc`, `clang`) et `make` pour installer les parsers.  
 > Commande utile : `:TSUpdate` pour mettre à jour manuellement.
 
+### Étape 7 — Intelligence de code (LSP) (`lua/plugins/lsp.lua`)
+
+| Plugin | Rôle |
+|--------|------|
+| [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim) | Gestionnaire de binaires (Hôte) |
+| [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | Pont de configuration LSP |
+| [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | Moteur d'autocomplétion |
+
+#### Raccourcis LSP (Navigation & Aide)
+
+| Raccourci | Action |
+|-----------|--------|
+| `g + d` | **Go to Definition** : sauter à la définition du symbole |
+| `g + r` | **Go to References** : voir tous les usages (dans Telescope) |
+| `K` | **Hover** : afficher la documentation de la fonction/variable |
+| `Space + r + n` | **Rename** : Renommer le symbole dans tout le projet |
+| `Space + c + a` | **Code Action** : afficher les corrections rapides |
+| `Space + d` | Afficher l'erreur de la ligne actuelle en flottant |
+| `[` / `]` + `d` | Erreur précédente / suivante |
+
+#### Autocomplétion (En mode Insert)
+
+| Raccourci | Action |
+|-----------|--------|
+| `Tab` | Parcourir les suggestions |
+| `Entrée` | Valider la suggestion |
+| `Ctrl + j/k` | Monter / Descendre dans la liste |
+| `Ctrl + Espace` | Forcer l'affichage de l'autocomplétion |
+
 ---
 
 ## 🗺️ Roadmap
@@ -259,6 +289,6 @@ Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub �
 - [x] **Étape 4** : Gestion des onglets / buffers (Bufferline)
 - [x] **Étape 5** : Fuzzy Finder (Telescope, Ctrl+P, recherche textuelle)
 - [x] **Étape 6** : Highlighting syntaxique (Treesitter, Ctrl+Espace)
-- [ ] **Étape 7** : LSP (Analyse statique, autocomplétion) — C/C++, Rust, Go, Python...
+- [x] **Étape 7** : LSP (Analyse statique, autocomplétion) — C/C++, Rust, Go, Python...
 - [ ] **Étape 8** : Débogueur (DAP — gdb, etc.)
 - [ ] **Étape 9** : Outils associés (CMake, UV/Ruff, formatters)

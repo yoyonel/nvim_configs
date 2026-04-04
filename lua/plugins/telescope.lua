@@ -8,6 +8,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
+		cmd = "Telescope",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			-- Extension native fzf pour la rapidité (conseillé)
@@ -55,6 +56,10 @@ return {
 							["<C-p>"] = actions.close, -- Re-appuyer Ctrl+P ferme si déjà ouvert
 							["<esc>"] = actions.close, -- Échap pour fermer (standard)
 						},
+					},
+					preview = {
+						timeout = 1000,      -- On laisse 1sec à Telescope (au lieu de 250ms)
+						filesize_limit = 1, -- Mo max pour un fichier en preview
 					},
 				},
 				pickers = {
