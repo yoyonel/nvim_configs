@@ -44,6 +44,14 @@ local key = vim.keymap.set
 -- Sauvegarde rapide (Ctrl+S)
 key({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Sauvegarder" })
 
+-- Navigation entre fenêtres (File Tree ↔ Éditeur ↔ Splits)
+-- Equvalent de Ctrl+W + direction, mais en une seule touche
+key("n", "<C-h>", "<C-w>h", { desc = "Aller à la fenêtre de gauche" })
+key("n", "<C-j>", "<C-w>j", { desc = "Aller à la fenêtre du bas" })
+key("n", "<C-k>", "<C-w>k", { desc = "Aller à la fenêtre du haut" })
+key("n", "<C-l>", "<C-w>l", { desc = "Aller à la fenêtre de droite" })
+
+
 -- Rechargement à chaud de la config (Space + Shift+R)
 -- Invalide le cache des modules lua/plugins/ puis re-source init.lua
 -- Conseil : utiliser :Lazy sync pour réinstaller/mettre à jour les plugins

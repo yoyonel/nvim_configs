@@ -41,7 +41,8 @@ nvim_configs/
 ├── init.lua            # Point d'entrée (options, keymaps, bootstrap Lazy)
 ├── lua/
 │   └── plugins/
-│       └── ui.lua      # Thème Catppuccin + Statusline Lualine
+│       ├── ui.lua          # Thème Catppuccin + Statusline Lualine
+│       └── filetree.lua    # File Tree (Neo-tree)
 ├── lazy-lock.json      # Versions verrouillées des plugins (généré auto)
 └── README.md           # Ce fichier
 ```
@@ -96,6 +97,19 @@ nvim_configs/
 
 > **Rechargement (`Space` → `Shift+R`) :** La touche Leader est `Space`. Le raccourci se saisit en **deux temps** : appuyer sur `Space`, relâcher, puis appuyer sur `R` (majuscule = `Shift+R`), le tout dans les 300ms. Uniquement disponible en mode **Normal** (`Esc` si tu es en Insert). Invalide le cache `lua/plugins/` et re-source `init.lua`. Pour réinstaller/mettre à jour les plugins, utiliser `:Lazy sync`.
 
+### Navigation entre fenêtres (File Tree ↔ Éditeur ↔ Splits)
+
+> Néovim gère plusieurs **fenêtres** (splits) simultanément. Ces raccourcis permettent de basculer entre le File Tree et l'éditeur, ou entre plusieurs splits ouverts.
+
+| Raccourci | Action |
+|-----------|--------|
+| `Ctrl + H` | Aller à la fenêtre de **gauche** (ex: éditeur → File Tree) |
+| `Ctrl + L` | Aller à la fenêtre de **droite** (ex: File Tree → éditeur) |
+| `Ctrl + J` | Aller à la fenêtre du **bas** |
+| `Ctrl + K` | Aller à la fenêtre du **haut** |
+
+> Ces raccourcis sont des alias de `Ctrl+W` + `h/j/k/l` (navigation native Vim entre splits).  
+> Ils fonctionnent quelle que soit la fenêtre active, y compris depuis Neo-tree.
 
 ---
 
@@ -115,6 +129,32 @@ nvim_configs/
 > ⚠️ **Nerd Font requise** pour les icônes et les séparateurs Lualine.  
 > Recommandé : [JetBrainsMono Nerd Font](https://www.nerdfonts.com/) ou `FiraCode Nerd Font`.  
 > Dans Ptyxis : *Préférences → Profil → Police*, choisir la Nerd Font installée.
+### Étape 3 — Arborescence de fichiers (`lua/plugins/filetree.lua`)
+
+| Plugin | Rôle |
+|--------|------|
+| [nvim-neo-tree/neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) | File tree style VSCode |
+| [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim) | Utilitaires Lua (dépendance) |
+| [MunifTanjim/nui.nvim](https://github.com/MunifTanjim/nui.nvim) | Composants UI (dépendance) |
+
+#### Raccourcis dans Neo-tree
+
+| Raccourci | Action |
+|-----------|--------|
+| `Ctrl + B` | Toggle le panneau (ouvrir / fermer) |
+| `Space + e` | Ouvrir et révéler le fichier courant dans l'arbre |
+| `Entrée` ou `o` ou `l` | Ouvrir le fichier / déplier le dossier |
+| `h` | Replier le dossier |
+| `v` | Ouvrir dans un split vertical |
+| `s` | Ouvrir dans un split horizontal |
+| `a` | Nouveau fichier |
+| `A` | Nouveau dossier |
+| `r` | Renommer |
+| `d` | Supprimer |
+| `y` / `x` / `p` | Copier / Couper / Coller |
+| `q` | Fermer le panneau |
+| `?` | Aide (liste des mappings) |
+
 
 ---
 
@@ -122,7 +162,7 @@ nvim_configs/
 
 - [x] **Étape 1** : Bootstrap Lazy.nvim + réglages de base + keymaps (Ctrl+S/C/V, sélection, rechargement)
 - [x] **Étape 2** : Thème visuel (Catppuccin) + statusline (Lualine)
-- [ ] **Étape 3** : Arborescence de fichiers (File Tree, équivalent de la barre latérale VSCode)
+- [x] **Étape 3** : Arborescence de fichiers (Neo-tree, Ctrl+B)
 - [ ] **Étape 4** : Gestion des onglets / buffers
 - [ ] **Étape 5** : Fuzzy Finder (Quick Open Ctrl+P, recherche textuelle)
 - [ ] **Étape 6** : Highlighting syntaxique (Treesitter)
