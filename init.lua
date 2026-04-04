@@ -87,12 +87,19 @@ local function reload_config()
 end
 key("n", "<leader>R", reload_config, { desc = "Recharger la config Neovim" })
 
+-- Sélectionner tout (Ctrl+A)
+key({ "n", "v", "i" }, "<C-a>", "<esc>ggVG", { desc = "Tout sélectionner" })
+
 
 -- Copier (Ctrl+C en mode visuel)
-key("v", "<C-c>", '"+y', { desc = "Copier vers presse-papier" })
+key({ "v", "s" }, "<C-c>", '"+y', { desc = "Copier vers presse-papier" })
+
+-- Couper (Ctrl+X)
+key({ "v", "s" }, "<C-x>", '"+d', { desc = "Couper vers presse-papier" })
+key("n", "<C-x>", '"+dd', { desc = "Couper la ligne vers presse-papier" })
 
 -- Coller (Ctrl+V)
-key({ "n", "v" }, "<C-v>", '"+p', { desc = "Coller depuis presse-papier" })
+key({ "n", "v", "s"     }, "<C-v>", '"+p', { desc = "Coller depuis presse-papier" })
 key("i", "<C-v>", "<C-r>+", { desc = "Coller depuis presse-papier (insert)" })
 
 -- Sélection avec Maj + Flèches (comme dans tout éditeur moderne)
