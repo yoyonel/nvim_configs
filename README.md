@@ -43,7 +43,8 @@ nvim_configs/
 │   └── plugins/
 │       ├── ui.lua          # Thème Catppuccin + Statusline Lualine
 │       ├── filetree.lua    # File Tree (Neo-tree)
-│       └── startup.lua     # Écran d'accueil + Aide raccourcis
+│       ├── startup.lua     # Écran d'accueil + Aide raccourcis
+│       └── bufferline.lua  # Onglets / Buffers (barre du haut)
 ├── lazy-lock.json      # Versions verrouillées des plugins (généré auto)
 └── README.md           # Ce fichier
 ```
@@ -192,6 +193,25 @@ Pour activer : `pre-commit install`.
 ### 3. Intégration Continue (CI)
 Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub à chaque Push ou Pull Request.
 
+### Étape 4 — Onglets et Buffers (`lua/plugins/bufferline.lua`)
+
+| Plugin | Rôle |
+|--------|------|
+| [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | Barre d'onglets moderne en haut |
+
+#### Raccourcis de navigation (Onglets)
+
+| Raccourci | Action |
+|-----------|--------|
+| `Shift + H` ou `Alt + ←` | Aller à l'onglet précédent |
+| `Shift + L` ou `Alt + →` | Aller à l'onglet suivant |
+| `Alt + [1-9]` | Aller directement à l'onglet 1-9 |
+| `Ctrl+Alt + ←/→` | Déplacer l'onglet actuel vers la gauche/droite |
+| `Space + w` | Fermer l'onglet courant (garder le split ouvert) |
+| `Space + x` | Fermer le buffer/onglet actuel |
+| `Clic gauche` | Sélectionner l'onglet |
+| `Clic droit` | Fermer l'onglet |
+
 ---
 
 ## 🗺️ Roadmap
@@ -199,7 +219,7 @@ Le fichier `.github/workflows/ci.yml` automatise ces vérifications sur GitHub �
 - [x] **Étape 1** : Bootstrap Lazy.nvim + réglages de base + keymaps (Ctrl+S/C/V, sélection, rechargement)
 - [x] **Étape 2** : Thème visuel (Catppuccin) + statusline (Lualine)
 - [x] **Étape 3** : Arborescence de fichiers (Neo-tree, Ctrl+B)
-- [ ] **Étape 4** : Gestion des onglets / buffers
+- [x] **Étape 4** : Gestion des onglets / buffers (Bufferline)
 - [ ] **Étape 5** : Fuzzy Finder (Quick Open Ctrl+P, recherche textuelle)
 - [ ] **Étape 6** : Highlighting syntaxique (Treesitter)
 - [ ] **Étape 7** : LSP (Analyse statique, autocomplétion) — C/C++, Rust, Go, Python...

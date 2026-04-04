@@ -48,6 +48,11 @@ local key = vim.keymap.set
 -- Sauvegarde rapide (Ctrl+S)
 key({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Sauvegarder" })
 
+-- Quitter Neovim (Space + q) — Comme Ctrl+Q sur VSCode
+key("n", "<leader>q", "<cmd>confirm qa<cr>", { desc = "Quitter Neovim (Tout fermer)" })
+key("n", "<leader>Q", "<cmd>qa!<cr>", { desc = "Forcer la sortie (sans sauvegarder)" })
+
+
 -- Navigation entre fenêtres (File Tree ↔ Éditeur ↔ Splits)
 -- Equvalent de Ctrl+W + direction, mais en une seule touche
 key("n", "<C-h>", "<C-w>h", { desc = "Aller à la fenêtre de gauche" })

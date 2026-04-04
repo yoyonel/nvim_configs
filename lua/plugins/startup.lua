@@ -50,10 +50,14 @@ return {
 				"  ║  Ctrl+B            Toggle File Tree                     ║",
 				"  ║  Ctrl+H / Ctrl+L   Fenêtre gauche / droite              ║",
 				"  ║  Ctrl+J / Ctrl+K   Fenêtre bas / haut                   ║",
+				"  ║  Alt+← / Alt+→     Onglet préc. / suivant               ║",
+				"  ║  Shift+H / Shift+L Onglet préc. / suivant               ║",
 				"  ║  Shift+Flèches     Sélection caractère par caractère    ║",
 				"  ║  Ctrl+Flèches      Saut par mot / paragraphe            ║",
 				"  ║  Ctrl+Shift+Flèch  Sélection par mot / paragraphe      ║",
 				"  ║  Ctrl+Q            Visual Block (sélection rect.)       ║",
+				"  ║  Space + x         Fermer l'onglet actuel               ║",
+				"  ║  Space + q         Quitter Neovim                       ║",
 				"  ║  Space + e         Révéler fichier dans File Tree       ║",
 				"  ║  Space + Shift+R   Recharger la config à chaud         ║",
 				"  ║  Space (+ attente) Afficher tous les raccourcis Leader  ║",
@@ -108,6 +112,8 @@ return {
 					-- Groupes nommés pour les raccourcis Leader
 					{ "<leader>e", desc = "Révéler dans File Tree" },
 					{ "<leader>R", desc = "Recharger la config" },
+					{ "<leader>x", desc = "Fermer l'onglet" },
+					{ "<leader>q", desc = "Quitter Neovim" },
 				},
 			})
 		end,
