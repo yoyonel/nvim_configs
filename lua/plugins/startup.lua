@@ -83,7 +83,7 @@ return {
 				val = cheatsheet_lines,
 				opts = {
 					position = "center",
-					hl = "Comment",
+					hl = "Normal",
 				},
 			}
 
