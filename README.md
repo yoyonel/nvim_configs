@@ -13,7 +13,23 @@ Basée sur **Lua** et le gestionnaire de plugins **[Lazy.nvim](https://github.co
 
 ---
 
-## 🔧 Installation rapide (autre poste)
+## 🔧 Installation & Déploiement
+
+### Déploiement via Taskfile (Recommandé)
+
+```bash
+# 1. Cloner ce dépôt
+git clone <URL_DU_REPO> ~/Prog/__PERSO__/nvim_configs
+cd ~/Prog/__PERSO__/nvim_configs
+
+# 2. Lier symboliquement vers ~/.config/nvim (sauvegarde auto si dossier existant)
+task host:link
+
+# 3. Valider l'intégrité de la configuration et des dépendances
+task check
+```
+
+### Installation directe (Autre poste sans Task)
 
 ```bash
 # 1. (Optionnel) Sauvegarder une éventuelle config existante
@@ -26,13 +42,6 @@ git clone <URL_DU_REPO> ~/.config/nvim
 nvim
 ```
 
-> **Note :** Le dossier cloné devient directement `~/.config/nvim`.  
-> Si tu veux travailler depuis un dossier séparé (ex: `~/Prog/nvim_configs`), crée un lien symbolique :
->
-> ```bash
-> ln -s /chemin/vers/nvim_configs ~/.config/nvim
-> ```
-
 ---
 
 ## 📁 Structure du projet
@@ -43,12 +52,24 @@ nvim_configs/
 ├── lua/
 │   └── plugins/
 │       ├── ui.lua          # Thème Catppuccin + Statusline Lualine
-│       ├── filetree.lua    # File Tree (Neo-tree)
-│       ├── startup.lua     # Écran d'accueil + Aide raccourcis
+│       ├── filetree.lua    # File Tree (Neo-tree, Ctrl+B)
+│       ├── startup.lua     # Écran d'accueil + Aide raccourcis (Alpha-nvim)
 │       ├── bufferline.lua  # Onglets / Buffers (barre du haut)
 │       ├── telescope.lua   # Fuzzy Finder (Ctrl+P, recherche globale)
 │       ├── treesitter.lua  # Coloration syntaxique + sélection intelligente
-│       └── lsp.lua         # Intelligence de code (Definitions, Autocomplete)
+│       ├── lsp.lua         # Intelligence de code (Definitions, Autocomplete)
+│       ├── debug.lua       # Débogueur DAP (gdb, lldb)
+│       ├── formatter.lua   # Formatage automatique (conform.nvim)
+│       ├── git.lua         # Git & 3-way merge diff (Diffview, Gitsigns)
+│       ├── tasks.lua       # Gestionnaire de tâches (Overseer)
+│       └── tools.lua       # Terminal flottant & CMake tools
+├── scripts/
+│   ├── capture_x11.sh  # Capture d'écran X11 automatisée (test visuel UI)
+│   ├── install_host.sh # Déploiement / Synchronisation / Symlink hôte
+│   ├── test_render.py  # Test unitaire de rendu PTY anti-régression
+│   └── validate.sh     # Validation syntaxe Lua et démarrage headless
+├── Taskfile.yml        # Automatisation des tâches (Task)
+├── Justfile            # Runner Just alternatif
 ├── lazy-lock.json      # Versions verrouillées des plugins (généré auto)
 └── README.md           # Ce fichier
 ```
@@ -304,6 +325,28 @@ Utilise `just` à la racine pour piloter les outils internes :
 | `Space + b`     | Toggle Breakpoint          | Place 🔴 ou retire un point d'arrêt.   |
 | `Space + B`     | Point d'arrêt conditionnel | Demande une condition pour s'arrêter.  |
 | `Space + d + u` | Toggle DAP UI              | Ouvre/ferme manuellement les panneaux. |
+
+---
+
+## 🛠️ Automatisation & Tâches (`Taskfile.yml`)
+
+Le projet utilise [go-task](https://taskfile.dev) (`task`) pour automatiser les tests, le linting, le déploiement hôte et la validation visuelle :
+
+| Commande              | Action                         | Description                                                                     |
+| :-------------------- | :----------------------------- | :------------------------------------------------------------------------------ |
+| `task check`          | Suite complète                 | Exécute `validate` + `lint` + `test:render` + `host:status`                     |
+| `task validate`       | Validation syntaxe & démarrage | Vérifie la syntaxe Lua et démarre Neovim headless sans erreur                   |
+| `task lint`           | Contrôle de style              | Vérifie le formatage avec `stylua` et `prettier` sans modifier                  |
+| `task fmt`            | Formatage automatique          | Nettoie et applique le formatage `stylua` et `prettier`                         |
+| `task test:render`    | Test anti-régression PTY       | Test automatisé sous PTY vérifiant l'absence de vidéo inverse / artefacts       |
+| `task capture:x11`    | Capture visuelle X11           | Lance Neovim dans Alacritty et prend une capture d'écran PNG                    |
+| `task host:status`    | Statut de synchronisation      | Indique si `~/.config/nvim` est un symlink ou un dossier physique désynchronisé |
+| `task host:link`      | Lien symbolique hôte           | Crée le lien `~/.config/nvim -> nvim_configs` (avec backup auto horodaté)       |
+| `task host:sync`      | Déploiement `rsync`            | Synchronise le contenu du dépôt vers `~/.config/nvim`                           |
+| `task host:diff`      | Comparaison hôte               | Affiche le `diff` entre le dossier de dev et `~/.config/nvim`                   |
+| `task plugins:sync`   | Sync plugins Lazy              | Synchronise et installe les plugins en mode headless                            |
+| `task plugins:update` | MAJ plugins Lazy               | Met à jour l'ensemble des plugins Lazy                                          |
+| `task plugins:clean`  | Nettoyage Lazy                 | Supprime les plugins orphelins                                                  |
 
 ---
 

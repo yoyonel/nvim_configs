@@ -69,4 +69,29 @@ Pour éviter que l'environnement ne se dégrade avec le temps :
 
 ---
 
-_Document conçu pour Latty (2026-04-04)._
+## 🎨 6. Fix du Surlignement Parasite du Dashboard Alpha (Tmux / `screen-256color`)
+
+**Problème** : Lors du lancement de Neovim dans Tmux, le bloc des raccourcis du dashboard Alpha affichait un gros surlignement rectangulaire lavande (`#8787af`) sur la gauche et du texte inversé.  
+**Cause technique (Triple interaction)** :
+
+1. `lua/plugins/startup.lua` appliquait `hl = "Comment"` sur l'élément cheatsheet.
+2. Catppuccin Mocha associe `Comment` à `cterm=italic`.
+3. Sous Tmux configuré avec `TERM=screen-256color`, l'échappement `sitm` (italique) est absent de la terminfo. Neovim bascule alors en mode `standout` / vidéo inverse (`smso`). La couleur de texte lavande devenait la couleur de fond.
+4. `alpha-nvim` centre le texte en ajoutant des espaces à gauche et applique le highlight de la colonne 0 à la fin de la ligne, inversant tous les espaces de marge.
+
+**Fix** : Passage du highlight de `"Comment"` à `"Normal"` dans `lua/plugins/startup.lua`. Le bloc hérite désormais du fond sombre standard sans déclencher de vidéo inverse.
+
+---
+
+## 🛠️ 7. Outillage d'Automatisation & Validation Visuelle
+
+Pour éviter les régressions et tester directement le rendu graphique sans manipulation manuelle :
+
+- **`Taskfile.yml`** : Point d'entrée unique (`task check`, `task fmt`, `task lint`...).
+- **`scripts/test_render.py`** : Lance Neovim dans un pseudo-terminal virtuel (PTY) sous `TERM=screen-256color`, parse le flux ANSI brut et affirme l'absence totale de code d'inversion vidéo (`\x1b[7m`) et de couleur parasite.
+- **`scripts/capture_x11.sh`** : Démarre Neovim dans un terminal X11 (Alacritty), attend l'affichage de l'UI et prend une capture fidèle via `xwd` + `ffmpeg`.
+- **`scripts/install_host.sh`** : Gère la synchronisation et le lien symbolique `~/.config/nvim -> nvim_configs` avec sauvegarde horodatée automatique en cas de dossier existant.
+
+---
+
+_Dernière mise à jour : Octobre 2026._
