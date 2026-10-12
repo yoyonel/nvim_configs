@@ -1,0 +1,7 @@
+# Screenshots temporaires
+screenshots/*.png
+screenshots/*.xwd
+/tmp/
+
+# Logs
+*.log

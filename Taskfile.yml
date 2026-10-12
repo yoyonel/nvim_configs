@@ -1,0 +1,134 @@
+# https://taskfile.dev
+version: "3"
+
+env:
+  PATH: "{{.HOME}}/.local/share/nvim/mason/bin:{{.PATH}}"
+
+vars:
+  NVIM: nvim
+  STYLUA:
+    sh: 'if command -v stylua >/dev/null 2>&1; then echo "stylua"; elif [ -x "{{.HOME}}/.local/share/nvim/mason/bin/stylua" ]; then echo "{{.HOME}}/.local/share/nvim/mason/bin/stylua"; else echo "stylua"; fi'
+  HOST_CONFIG_DIR: "{{.HOME}}/.config/nvim"
+  SCREENSHOT_DIR: screenshots
+  SCREENSHOT_DEFAULT: "{{.SCREENSHOT_DIR}}/dashboard.png"
+  SCRIPTS_DIR: scripts
+  LUA_DIRS: "init.lua lua/"
+
+tasks:
+  default:
+    desc: "Affiche la liste des tâches disponibles"
+    cmds:
+      - task --list
+
+  # ============================================================================
+  # 🧪 QUALITÉ, VALIDATION & LINT
+  # ============================================================================
+  validate:
+    desc: "Valide la syntaxe Lua et le démarrage sans erreur de Neovim"
+    cmds:
+      - echo "🧪 Validation du démarrage Neovim..."
+      - bash {{.SCRIPTS_DIR}}/validate.sh
+
+  lint:
+    desc: "Vérifie le formatage et les linters (stylua, prettier) sans modifier"
+    cmds:
+      - echo "🕵️  Vérification stylua..."
+      - "{{.STYLUA}} --check {{.LUA_DIRS}}"
+      - echo "🕵️  Vérification prettier (docs & configs)..."
+      - npx -y prettier --check "**/*.{md,json,yaml,yml}"
+
+  fmt:
+    desc: "Formate automatiquement tous les fichiers (stylua, prettier)"
+    cmds:
+      - echo "✨ Formatage stylua..."
+      - "{{.STYLUA}} {{.LUA_DIRS}}"
+      - echo "✨ Formatage prettier..."
+      - npx -y prettier --write "**/*.{md,json,yaml,yml}"
+      - echo "✅ Code et documentation formatés !"
+
+  check:
+    desc: "Exécute toutes les validations, linters et tests de rendu"
+    cmds:
+      - task: validate
+      - task: lint
+      - task: test:render
+      - task: host:status
+
+  test:
+    desc: "Alias pour la suite de vérifications complètes"
+    cmds:
+      - task: check
+
+  # ============================================================================
+  # 🖥️ TESTS DE RENDU & CAPTURE X11
+  # ============================================================================
+  test:render:
+    desc: "Test automatisé du rendu PTY (détecte vidéo inverse et surlignements parasites)"
+    cmds:
+      - python3 {{.SCRIPTS_DIR}}/test_render.py
+
+  capture:x11:
+    desc: "Capture d'écran X11 réelle du tableau de bord Neovim (ex: task capture:x11 -- [fichier] [delai])"
+    vars:
+      OUT: "{{default .SCREENSHOT_DEFAULT .CLI_ARGS}}"
+    cmds:
+      - bash {{.SCRIPTS_DIR}}/capture_x11.sh {{.OUT}}
+      - echo "📸 Aperçu disponible dans {{.OUT}}"
+
+  # ============================================================================
+  # 🚀 DÉPLOIEMENT & SYNCHRONISATION HÔTE (~/.config/nvim)
+  # ============================================================================
+  host:status:
+    desc: "Affiche le statut de synchronisation entre le repo et ~/.config/nvim"
+    cmds:
+      - bash {{.SCRIPTS_DIR}}/install_host.sh status
+
+  host:diff:
+    desc: "Affiche le diff complet entre ce repo et la configuration active sur l'hôte"
+    cmds:
+      - bash {{.SCRIPTS_DIR}}/install_host.sh diff
+
+  host:sync:
+    desc: "Synchronise les fichiers du repo vers ~/.config/nvim (rsync)"
+    cmds:
+      - bash {{.SCRIPTS_DIR}}/install_host.sh sync
+
+  host:link:
+    desc: "Configure ~/.config/nvim comme lien symbolique vers ce repo (avec backup automatique)"
+    cmds:
+      - bash {{.SCRIPTS_DIR}}/install_host.sh link
+
+  install:
+    desc: "Installe / met à jour la configuration sur l'hôte (alias pour host:sync)"
+    cmds:
+      - task: host:sync
+
+  # ============================================================================
+  # 📦 GESTION DES PLUGINS (LAZY.NVIM)
+  # ============================================================================
+  plugins:sync:
+    desc: "Synchronise et installe les plugins Lazy en mode headless"
+    cmds:
+      - echo "📦 Synchronisation des plugins Lazy..."
+      - '{{.NVIM}} --headless "+Lazy! sync" +qa'
+      - echo "✅ Plugins synchronisés !"
+
+  plugins:update:
+    desc: "Met à jour tous les plugins Lazy en mode headless"
+    cmds:
+      - echo "🔄 Mise à jour des plugins Lazy..."
+      - '{{.NVIM}} --headless "+Lazy! update" +qa'
+      - echo "✅ Plugins mis à jour !"
+
+  plugins:clean:
+    desc: "Nettoie les plugins supprimés ou obsolètes"
+    cmds:
+      - '{{.NVIM}} --headless "+Lazy! clean" +qa'
+
+  # ============================================================================
+  # 💻 UTILITAIRES DE DEV
+  # ============================================================================
+  run:
+    desc: "Lance Neovim sur le projet"
+    cmds:
+      - "{{.NVIM}}"
